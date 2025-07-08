@@ -23,7 +23,7 @@ The Order Normalizer API is a Ruby on Rails REST API designed specifically for p
 
 The API provides asynchronous file processing capabilities using Sidekiq background jobs, ensuring that large files can be processed without blocking the main application thread. Users can upload legacy order files, receive immediate acknowledgment with tracking IDs, and retrieve processed results when ready. The system also offers comprehensive order querying functionality with filtering options for order IDs and purchase date ranges, all while maintaining strict adherence to SOLID design principles for maximum maintainability and scalability.
 
-Built as a demonstration project for technical interviews (specifically for Luizalabs), this API showcases modern Ruby on Rails development practices, including comprehensive testing with RSpec, code coverage analysis with SimpleCov, background job processing, and cloud deployment capabilities via Fly.io with Docker containerization.
+This API showcases modern Ruby on Rails development practices, including comprehensive testing with RSpec, code coverage analysis with SimpleCov, background job processing, and cloud deployment capabilities via Fly.io with Docker containerization.
 
 ## Architecture
 
@@ -517,5 +517,4 @@ This project is developed as a demonstration application for technical interview
 * [Brakeman Security Scanner](https://brakemanscanner.org/) - Static analysis security vulnerability scanner for Rails applications
 * [RuboCop Code Style](https://rubocop.org/) - Ruby static code analyzer and formatter for consistent code style
 * [ASDF Version Manager](https://asdf-vm.com/) - Extensible version manager for multiple programming languages
-* [Luizalabs Career Opportunities](https://www.linkedin.com/company/luizalabs/posts/?feedView=all) - Target company for demonstration project development
 
