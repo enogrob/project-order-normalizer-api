@@ -1,6 +1,6 @@
-# **Project Name**
+# **Project Order Normalizer Api**
 
-[Homepage](#project-url)
+[Homepage](https://github.com/enogrob/order_normalizer_api)
 
 ![project image](images/project.png)
 
