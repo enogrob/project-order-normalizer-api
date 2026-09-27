@@ -30,56 +30,56 @@ This API showcases modern Ruby on Rails development practices, including compreh
 ```mermaid
 graph TD
     subgraph "Client Layer"
-        A[HTTP Client]
-        B[File Upload]
+      A["👤 HTTP Client"]
+      B[/"📄 File Upload"/]
     end
 
     subgraph "Application Layer"
-        C[OrdersController]
-        D[NormalizeFileService]
-        E[FileUploadWorker]
-        F[ApplicationController]
+      C["⚙️ OrdersController"]
+      D["🧩 NormalizeFileService"]
+      E["⚙️ FileUploadWorker"]
+      F["⚙️ ApplicationController"]
     end
 
     subgraph "Background Processing"
-        G[Sidekiq]
-        H[Redis Queue]
-        I[Background Jobs]
+      G["⚙️ Sidekiq"]
+      H[("🗃️ Redis Queue")]
+      I["📦 Background Jobs"]
     end
 
     subgraph "Data Layer"
-        J[User Model]
-        K[Order Model]
-        L[Product Model]
-        M[Upload Model]
+      J["👤 User Model"]
+      K["🧾 Order Model"]
+      L["📦 Product Model"]
+      M["📄 Upload Model"]
     end
 
     subgraph "Database"
-        N[(SQLite Database)]
-        O[Users Table]
-        P[Orders Table]
-        Q[Products Table]
-        R[Uploads Table]
+      N[("🗄️ SQLite Database")]
+      O[("Users Table")]
+      P[("Orders Table")]
+      Q[("Products Table")]
+      R[("Uploads Table")]
     end
 
     subgraph "External Services"
-        S[Fly.io Deployment]
-        T[Docker Container]
-        U[Redis Cache]
+      S["☁️ Fly.io Deployment"]
+      T[("📦 Docker Container")]
+      U[("🗃️ Redis Cache")]
     end
 
-    A --> C
-    B --> C
-    C --> D
-    C --> E
-    E --> G
-    G --> H
-    H --> I
-    I --> D
-    D --> J
-    D --> K
-    D --> L
-    D --> M
+    A -->|requests| C
+    B -->|uploads| C
+    C -->|normalizes| D
+    C -->|enqueues| E
+    E -->|runs on| G
+    G -->|uses| H
+    H -->|dispatches| I
+    I -->|calls| D
+    D -->|persists| J
+    D -->|persists| K
+    D -->|persists| L
+    D -->|tracks| M
     J --> O
     K --> P
     L --> Q
@@ -88,9 +88,17 @@ graph TD
     P --> N
     Q --> N
     R --> N
-    G --> U
-    T --> S
-    C --> A
+    G -->|caches jobs| U
+    T -->|hosts| S
+    C -->|returns JSON| A
+
+    classDef process fill:#DCEBFA,stroke:#355C7D,color:#1E293B
+    classDef data fill:#DDF2E1,stroke:#3F6B4F,color:#1E3324
+    classDef external fill:#FBE4F0,stroke:#8E496D,color:#3F2434
+    class A,B,S external
+    class C,D,E,F,G,I process
+    class H,J,K,L,M,N,O,P,Q,R,T,U data
+    linkStyle default stroke:#52606D
 ```
 
 <details>
@@ -98,9 +106,9 @@ graph TD
 
 ```mermaid
 erDiagram
-    User ||--o{ Order : "has_many"
-    Order ||--o{ Product : "has_many"
-    Order ||--|| Upload : "belongs_to"
+    User ||--o{ Order : "has many"
+    Order ||--o{ Product : "has many"
+    Order ||--|| Upload : "belongs to"
     
     User {
         id integer PK
@@ -145,12 +153,12 @@ erDiagram
 
 ```mermaid
 sequenceDiagram
-    participant Client
-    participant Controller
-    participant Worker
-    participant Service
-    participant Redis
-    participant Database
+    participant Client as "👤 Client"
+    participant Controller as "⚙️ Controller"
+    participant Worker as "⚙️ Worker"
+    participant Service as "🧩 Service"
+    participant Redis as "🗃️ Redis"
+    participant Database as "🗄️ Database"
 
     Client->>Controller: POST /orders/upload
     Controller->>Redis: Enqueue FileUploadWorker
@@ -178,21 +186,21 @@ sequenceDiagram
 ```mermaid
 graph TB
     subgraph "Development Environment"
-        DEV[Local Development]
-        DOCKER_DEV[Docker Compose]
-        REDIS_LOCAL[Local Redis]
+      DEV["💻 Local Development"]
+      DOCKER_DEV["📦 Docker Compose"]
+      REDIS_LOCAL[("🗃️ Local Redis")]
     end
     
     subgraph "Fly.io Cloud Platform"
-        FLY[Fly.io App]
-        REDIS_FLY[Fly Redis]
-        DOCKER_PROD[Docker Container]
+      FLY["☁️ Fly.io App"]
+      REDIS_FLY[("🗃️ Fly Redis")]
+      DOCKER_PROD[("📦 Docker Container")]
     end
     
     subgraph "External Dependencies"
-        GITHUB[GitHub Repository]
-        DOCKER_HUB[Docker Registry]
-        DNS[Custom Domain]
+      GITHUB["🔗 GitHub Repository"]
+      DOCKER_HUB["📦 Docker Registry"]
+      DNS["🌐 Custom Domain"]
     end
     
     DEV --> DOCKER_DEV
@@ -203,6 +211,14 @@ graph TB
     DOCKER_PROD --> FLY
     FLY --> REDIS_FLY
     FLY --> DNS
+
+    classDef process fill:#DCEBFA,stroke:#355C7D,color:#1E293B
+    classDef data fill:#DDF2E1,stroke:#3F6B4F,color:#1E3324
+    classDef external fill:#FBE4F0,stroke:#8E496D,color:#3F2434
+    class DEV,DOCKER_DEV,FLY,DOCKER_PROD process
+    class REDIS_LOCAL,REDIS_FLY data
+    class GITHUB,DOCKER_HUB,DNS external
+    linkStyle default stroke:#52606D
 ```
 
 </details>
@@ -517,4 +533,5 @@ This project is developed as a demonstration application for technical interview
 * [Brakeman Security Scanner](https://brakemanscanner.org/) - Static analysis security vulnerability scanner for Rails applications
 * [RuboCop Code Style](https://rubocop.org/) - Ruby static code analyzer and formatter for consistent code style
 * [ASDF Version Manager](https://asdf-vm.com/) - Extensible version manager for multiple programming languages
+* [Mermaid Documentation](https://mermaid.js.org/intro/) - Syntax and diagram type reference for the architecture diagrams
 
